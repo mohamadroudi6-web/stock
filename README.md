@@ -45,6 +45,7 @@ npm run dev
 
 * **Admin**: [admin@stock.com] / password
 * **Magasinier**: [magasinier@stock.com] / password
+* **Suppulier**:[supplier@global.com] / password
 
 ## Règles métier
 
