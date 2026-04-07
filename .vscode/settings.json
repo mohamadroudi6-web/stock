@@ -1,0 +1,10 @@
+{
+    "intelephense.files.associations": [
+        "**/*.php",
+        "**/.php-accessor/**/*.php"
+    ],
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "**/.php-accessor/**/*.php": "php"
+    }
+}

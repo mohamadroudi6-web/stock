@@ -1,0 +1,1303 @@
+/* ============================================================
+   STOCKS-PRO — Design System
+   Modern SaaS Dashboard CSS
+   ============================================================ */
+
+/* --- Google Fonts & Icons already loaded in index.html --- */
+
+/* ============================================================
+   1. CSS VARIABLES — Design Tokens
+   ============================================================ */
+:root {
+  /* Brand Colors */
+  --primary:        #4f46e5;
+  --primary-light:  #6366f1;
+  --primary-dark:   #3730a3;
+  --primary-rgb:    79, 70, 229;
+
+  --success:        #10b981;
+  --success-light:  #d1fae5;
+  --success-dark:   #065f46;
+
+  --danger:         #ef4444;
+  --danger-light:   #fee2e2;
+  --danger-dark:    #991b1b;
+
+  --warning:        #f59e0b;
+  --warning-light:  #fef3c7;
+  --warning-dark:   #92400e;
+
+  --info:           #3b82f6;
+  --info-light:     #dbeafe;
+
+  /* Neutrals */
+  --gray-50:        #f8fafc;
+  --gray-100:       #f1f5f9;
+  --gray-200:       #e2e8f0;
+  --gray-300:       #cbd5e1;
+  --gray-400:       #94a3b8;
+  --gray-500:       #64748b;
+  --gray-600:       #475569;
+  --gray-700:       #334155;
+  --gray-800:       #1e293b;
+  --gray-900:       #0f172a;
+
+  /* Layout */
+  --sidebar-width:  270px;
+  --navbar-height:  68px;
+  --border-radius:  12px;
+  --border-radius-sm: 8px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+
+  /* Shadows */
+  --shadow-xs:      0 1px 2px 0 rgba(0,0,0,.05);
+  --shadow-sm:      0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px -1px rgba(0,0,0,.1);
+  --shadow-md:      0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+  --shadow-lg:      0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+  --shadow-xl:      0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1);
+  --shadow-primary: 0 8px 25px -5px rgba(var(--primary-rgb), 0.4);
+  --shadow-glow:    0 0 30px rgba(var(--primary-rgb), 0.15);
+
+  /* Transitions */
+  --transition-fast:   all 0.15s ease;
+  --transition-base:   all 0.25s ease;
+  --transition-slow:   all 0.4s ease;
+
+  /* Fonts */
+  --font-sans:      'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Background */
+  --bg-body:        #f0f4ff;
+  --bg-sidebar:     #0f172a;
+  --bg-navbar:      rgba(255,255,255,0.9);
+  --bg-card:        #ffffff;
+  --bg-input:       #f8fafc;
+
+  /* Text */
+  --text-primary:   #0f172a;
+  --text-secondary: #64748b;
+  --text-muted:     #94a3b8;
+
+  /* Border */
+  --border-color:   #e2e8f0;
+}
+
+/* ============================================================
+   2. DARK MODE
+   ============================================================ */
+[data-theme="dark"] {
+  --bg-body:        #0d1117;
+  --bg-sidebar:     #0a0f1a;
+  --bg-navbar:      rgba(13,17,23,0.9);
+  --bg-card:        #161b22;
+  --bg-input:       #1c2128;
+
+  --text-primary:   #f0f6fc;
+  --text-secondary: #8b949e;
+  --text-muted:     #484f58;
+
+  --border-color:   #21262d;
+
+  --gray-50:        #161b22;
+  --gray-100:       #1c2128;
+  --gray-200:       #21262d;
+  --gray-300:       #30363d;
+  --gray-400:       #484f58;
+  --gray-500:       #8b949e;
+}
+
+/* ============================================================
+   3. BASE STYLES — Robust Layout (Full Width & Height)
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Avoid horizontal scroll at root level */
+  width: 100vw;
+}
+
+#root {
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Global Layout Container (Flex Wrapper) ── */
+.sp-layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ── Custom Scrollbar (Global) ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--gray-700);
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-600);
+}
+
+/* ── Bootstrap Fluid Overrides ── */
+.container, .container-fluid {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 2.5rem !important;
+  padding-right: 2.5rem !important;
+  margin: 0 !important; /* Ensure no unwanted margin-centering */
+}
+
+@media (max-width: 992px) {
+  .container, .container-fluid {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+
+/* ============================================================
+   4. SIDEBAR — fixed, full height, no horizontal overflow
+   ============================================================ */
+.sp-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  overflow: hidden;
+  /* NO transition on width/height — avoids flash on page load */
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sp-sidebar::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(var(--primary-rgb), 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Sidebar Brand */
+.sp-sidebar-brand {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.sp-sidebar-brand-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: var(--shadow-primary);
+  flex-shrink: 0;
+}
+
+.sp-sidebar-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-sidebar-brand-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.sp-sidebar-brand-sub {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Sidebar Navigation */
+.sp-sidebar-nav {
+  flex: 1;
+  padding: 16px 12px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sp-sidebar-nav::-webkit-scrollbar { display: none; }
+
+.sp-nav-group {
+  margin-bottom: 24px;
+}
+
+.sp-nav-group-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3);
+  padding: 0 12px 8px;
+  display: block;
+}
+
+.sp-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--border-radius-sm);
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: var(--transition-fast);
+  margin-bottom: 2px;
+  position: relative;
+}
+
+.sp-nav-link:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.07);
+}
+
+.sp-nav-link.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.3), rgba(var(--primary-rgb), 0.15));
+  font-weight: 600;
+}
+
+.sp-nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+  border-radius: 0 4px 4px 0;
+}
+
+.sp-nav-link .bi {
+  font-size: 16px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.sp-nav-badge {
+  margin-left: auto;
+  background: var(--danger);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 20px;
+}
+
+/* Sidebar Footer (User + Logout) */
+.sp-sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.sp-user-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--border-radius-sm);
+  background: rgba(255,255,255,0.05);
+  margin-bottom: 8px;
+}
+
+.sp-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.sp-user-info { flex: 1; min-width: 0; }
+
+.sp-user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sp-user-role {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.35);
+}
+
+.sp-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--border-radius-sm);
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.4);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-align: left;
+}
+
+.sp-logout-btn:hover {
+  background: rgba(239,68,68,0.12);
+  color: #f87171;
+}
+
+/* ============================================================
+   5. MAIN LAYOUT
+   ============================================================ */
+/* ============================================================
+   5. MAIN LAYOUT — Full Width Content Area
+   ============================================================ */
+.sp-main-wrapper {
+  margin-left: var(--sidebar-width);
+  flex: 1; /* Take all remaining horizontal space */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 0; /* Critical fix for flex children with tables/long text */
+  background: var(--bg-body);
+  position: relative;
+}
+
+.sp-content {
+  flex: 1; /* Take all remaining vertical space */
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 992px) {
+  .sp-main-wrapper {
+    margin-left: 0; /* Potential for mobile layout with hidden sidebar */
+  }
+}
+
+
+/* ============================================================
+   6. NAVBAR / TOPBAR
+   ============================================================ */
+.sp-navbar {
+  height: var(--navbar-height);
+  background: var(--bg-navbar);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  gap: 16px;
+}
+
+.sp-navbar-title {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.sp-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sp-icon-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: var(--gray-100);
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-size: 16px;
+  position: relative;
+}
+
+.sp-icon-btn:hover {
+  background: var(--gray-200);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.sp-icon-btn .badge-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  background: var(--danger);
+  border-radius: 50%;
+  border: 1.5px solid var(--bg-card);
+}
+
+.sp-divider-v {
+  width: 1px;
+  height: 28px;
+  background: var(--border-color);
+  margin: 0 4px;
+}
+
+.sp-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px 6px 6px;
+  background: var(--gray-100);
+  border-radius: 40px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.sp-user-pill:hover {
+  background: var(--gray-200);
+  box-shadow: var(--shadow-sm);
+}
+
+.sp-user-pill-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+}
+
+.sp-user-pill-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sp-user-pill-role {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   7. PAGE CONTENT
+   ============================================================ */
+.sp-content {
+  flex: 1;
+  padding: 32px 28px;
+}
+
+.sp-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.sp-page-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.035em;
+  margin: 0 0 4px;
+}
+
+.sp-page-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ============================================================
+   8. STAT CARDS
+   ============================================================ */
+.sp-stat-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.sp-stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 0 var(--border-radius-lg) 0 80px;
+  opacity: 0.05;
+  background: currentColor;
+  pointer-events: none;
+}
+
+.sp-stat-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.sp-stat-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.sp-stat-value {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.sp-stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   9. CARDS
+   ============================================================ */
+.sp-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.sp-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sp-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.sp-card-body {
+  padding: 24px;
+}
+
+/* ============================================================
+   10. TABLE
+   ============================================================ */
+.sp-table-wrapper {
+  overflow-x: auto;
+}
+
+.sp-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sp-table thead th {
+  padding: 12px 16px;
+  background: var(--gray-50);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.sp-table thead th:first-child { padding-left: 24px; }
+.sp-table thead th:last-child  { padding-right: 24px; text-align: right; }
+
+.sp-table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition-fast);
+}
+
+.sp-table tbody tr:last-child { border-bottom: none; }
+
+.sp-table tbody tr:hover {
+  background: var(--gray-50);
+}
+
+.sp-table tbody td {
+  padding: 14px 16px;
+  color: var(--text-primary);
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.sp-table tbody td:first-child { padding-left: 24px; }
+.sp-table tbody td:last-child  { padding-right: 24px; text-align: right; }
+
+/* Product avatar in table */
+.sp-product-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--border-radius-sm);
+  background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   11. BADGES & PILLS
+   ============================================================ */
+.sp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.sp-badge-success {
+  background: var(--success-light);
+  color: var(--success-dark);
+}
+
+.sp-badge-danger {
+  background: var(--danger-light);
+  color: var(--danger-dark);
+}
+
+.sp-badge-warning {
+  background: var(--warning-light);
+  color: var(--warning-dark);
+}
+
+.sp-badge-info {
+  background: var(--info-light);
+  color: var(--info);
+}
+
+.sp-badge-neutral {
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+/* ============================================================
+   12. BUTTONS
+   ============================================================ */
+.sp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: var(--border-radius-sm);
+  font-size: 13.5px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.sp-btn:hover { transform: translateY(-1px); }
+.sp-btn:active { transform: translateY(0); }
+
+.sp-btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: var(--shadow-primary);
+}
+
+.sp-btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  box-shadow: 0 10px 30px -5px rgba(var(--primary-rgb), 0.5);
+  color: white;
+}
+
+.sp-btn-secondary {
+  background: var(--gray-100);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.sp-btn-secondary:hover {
+  background: var(--gray-200);
+  color: var(--text-primary);
+}
+
+.sp-btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid rgba(239,68,68,0.2);
+}
+
+.sp-btn-danger:hover {
+  background: var(--danger-light);
+  border-color: var(--danger);
+}
+
+.sp-btn-success {
+  background: linear-gradient(135deg, var(--success), #34d399);
+  color: white;
+  box-shadow: 0 4px 15px -3px rgba(16,185,129,0.4);
+}
+
+.sp-btn-icon {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: var(--border-radius-sm);
+  justify-content: center;
+}
+
+.sp-btn-sm {
+  padding: 6px 12px;
+  font-size: 12.5px;
+}
+
+/* ============================================================
+   13. FORM INPUTS
+   ============================================================ */
+.sp-form-group { margin-bottom: 20px; }
+
+.sp-form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.sp-form-control, .sp-form-select {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+  outline: none;
+  appearance: none;
+}
+
+.sp-form-control:focus, .sp-form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.12);
+  background: var(--bg-card);
+}
+
+.sp-form-control::placeholder { color: var(--text-muted); }
+
+.sp-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sp-input-group .sp-form-control {
+  padding-left: 40px;
+}
+
+.sp-input-icon {
+  position: absolute;
+  left: 13px;
+  font-size: 15px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* ============================================================
+   14. PAGINATION
+   ============================================================ */
+.sp-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sp-pagination-info {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.sp-pagination-buttons {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.sp-page-btn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-decoration: none;
+}
+
+.sp-page-btn:hover {
+  background: var(--gray-100);
+  color: var(--text-primary);
+  border-color: var(--gray-300);
+}
+
+.sp-page-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.3);
+}
+
+.sp-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============================================================
+   15. ALERTS & NOTIFICATIONS
+   ============================================================ */
+.sp-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: var(--border-radius);
+  font-size: 13.5px;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.sp-alert-danger {
+  background: var(--danger-light);
+  border-color: rgba(239,68,68,0.2);
+  color: var(--danger-dark);
+}
+
+.sp-alert-success {
+  background: var(--success-light);
+  border-color: rgba(16,185,129,0.2);
+  color: var(--success-dark);
+}
+
+.sp-alert-warning {
+  background: var(--warning-light);
+  border-color: rgba(245,158,11,0.2);
+  color: var(--warning-dark);
+}
+
+/* ============================================================
+   16. LIST GROUP (Dashboard alerts)
+   ============================================================ */
+.sp-list-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition-fast);
+}
+
+.sp-list-item:last-child { border-bottom: none; }
+
+.sp-list-item:hover { background: var(--gray-50); padding-left: 4px; }
+
+.sp-movement-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   17. LOGIN PAGE
+   ============================================================ */
+.sp-login-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-login-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.sp-login-card {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.sp-login-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  padding: 36px 40px 32px;
+  text-align: center;
+  position: relative;
+}
+
+.sp-login-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: rgba(255,255,255,0.95);
+  clip-path: ellipse(60% 100% at 50% 100%);
+}
+
+.sp-login-logo {
+  width: 64px;
+  height: 64px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin: 0 auto 16px;
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 8px 20px -4px rgba(0,0,0,0.2);
+}
+
+.sp-login-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: white;
+  letter-spacing: -0.03em;
+  margin: 0 0 4px;
+}
+
+.sp-login-sub {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sp-login-body {
+  padding: 32px 40px 36px;
+}
+
+/* ============================================================
+   18. DARK MODE TOGGLE
+   ============================================================ */
+.sp-theme-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+}
+
+.sp-theme-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.sp-theme-track {
+  position: absolute;
+  inset: 0;
+  background: var(--gray-300);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.sp-theme-track::after {
+  content: '☀️';
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  transition: var(--transition-base);
+}
+
+.sp-theme-toggle input:checked + .sp-theme-track {
+  background: var(--primary);
+}
+
+.sp-theme-toggle input:checked + .sp-theme-track::after {
+  content: '🌙';
+  left: calc(100% - 20px);
+}
+
+/* ============================================================
+   19. ANIMATIONS
+   ============================================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-6px); }
+  75%       { transform: translateX(6px); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in     { animation: fadeIn 0.35s ease forwards; }
+.animate-fade-in-up  { animation: fadeInUp 0.4s ease forwards; }
+.animate-slide-left  { animation: slideInLeft 0.35s ease forwards; }
+.animate-shake       { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+.animate-pulse       { animation: pulse 1.5s ease infinite; }
+.animate-spin        { animation: spin 0.8s linear infinite; }
+
+/* Stagger children */
+.animate-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.animate-stagger > *:nth-child(2) { animation-delay: 0.10s; }
+.animate-stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.animate-stagger > *:nth-child(4) { animation-delay: 0.20s; }
+.animate-stagger > * { opacity: 0; animation: fadeInUp 0.4s ease forwards; }
+
+/* ============================================================
+   20. LOADING SPINNER
+   ============================================================ */
+.sp-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--gray-200);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto;
+}
+
+.sp-loading-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ============================================================
+   21. STOCK LEVEL BAR
+   ============================================================ */
+.sp-stock-bar {
+  height: 5px;
+  background: var(--gray-100);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 4px;
+  width: 80px;
+}
+
+.sp-stock-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.6s ease;
+}
+
+/* ============================================================
+   22. MISC UTILITIES
+   ============================================================ */
+.fw-black   { font-weight: 900 !important; }
+.fw-800     { font-weight: 800 !important; }
+.fw-700     { font-weight: 700 !important; }
+
+.text-xs    { font-size: 11px !important; }
+.text-sm    { font-size: 12.5px !important; }
+.text-base  { font-size: 14px !important; }
+
+.tracking-tight   { letter-spacing: -0.025em; }
+.tracking-normal  { letter-spacing: 0; }
+.tracking-wide    { letter-spacing: 0.05em; }
+.tracking-wider   { letter-spacing: 0.1em; }
+
+.rounded-xl { border-radius: var(--border-radius-xl) !important; }
+.rounded-lg { border-radius: var(--border-radius-lg) !important; }
+.rounded-md { border-radius: var(--border-radius) !important; }
+.rounded-sm { border-radius: var(--border-radius-sm) !important; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+/* Focus rings */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions on theme switch */
+*, *::before, *::after {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
